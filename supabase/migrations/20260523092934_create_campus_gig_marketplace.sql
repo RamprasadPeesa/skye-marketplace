@@ -2,7 +2,7 @@
   # Campus Gig Marketplace Schema
 
   ## Overview
-  Full schema for the Skye/Milo campus gig marketplace platform.
+  Full schema for the Milo campus gig marketplace platform.
 
   ## New Tables
 

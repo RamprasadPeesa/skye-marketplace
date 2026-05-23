@@ -28,7 +28,7 @@ function App() {
           <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center animate-pulse">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <p className="text-slate-400 text-sm">Loading Skye...</p>
+          <p className="text-slate-400 text-sm">Loading Milo...</p>
         </div>
       </div>
     );
@@ -59,7 +59,7 @@ function App() {
               <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-slate-900 animate-pulse" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-white tracking-tight leading-none">Skye</h1>
+              <h1 className="text-lg font-bold text-white tracking-tight leading-none">Milo</h1>
               <p className="text-xs text-slate-500 leading-none mt-0.5">Campus Gig Marketplace</p>
             </div>
           </div>

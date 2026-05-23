@@ -64,8 +64,8 @@ export function OnboardingWizard({ onComplete }: Props) {
   const steps = [
     {
       icon: <User className="w-6 h-6 text-cyan-400" />,
-      title: 'Welcome to Skye',
-      subtitle: "Milo's campus gig marketplace",
+      title: 'Welcome to Milo',
+      subtitle: 'Your campus gig concierge',
       content: (
         <div className="space-y-4">
           <p className="text-slate-400 text-sm">Let's get your profile set up in 60 seconds.</p>
@@ -232,8 +232,8 @@ export function OnboardingWizard({ onComplete }: Props) {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Skye</h1>
-            <p className="text-xs text-slate-500">Powered by Milo AI</p>
+            <h1 className="text-xl font-bold text-white tracking-tight">Milo</h1>
+            <p className="text-xs text-slate-500">Campus Gig Marketplace</p>
           </div>
         </div>
 
