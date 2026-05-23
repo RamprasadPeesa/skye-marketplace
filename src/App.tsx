@@ -1,11 +1,15 @@
-import React from 'react';
-import { Sparkles, Shield, Activity, Menu } from 'lucide-react';
+import React, { useState } from 'react';
+import { Sparkles, Loader2 } from 'lucide-react';
 import { OnboardingWizard } from './components/OnboardingWizard';
-import { MiloChat } from './components/MiloChat';
-import { Sidebar } from './components/Sidebar';
+import { ChatPage } from './components/ChatPage';
+import { SettingsPage } from './components/SettingsPage';
 import { useAppState } from './hooks/useAppState';
 
+type Page = 'onboarding' | 'chat' | 'settings';
+
 function App() {
+  const [page, setPage] = useState<Page>('chat');
+
   const {
     userId,
     profile,
@@ -34,13 +38,31 @@ function App() {
     );
   }
 
-  if (!profile?.onboarding_complete) {
+  if (!profile?.onboarding_complete || page === 'onboarding') {
     return (
       <OnboardingWizard
         onComplete={async (data) => {
-          await saveProfile(data);
+          await saveProfile({ ...data, onboarding_complete: true });
+          setPage('chat');
         }}
       />
+    );
+  }
+
+  if (page === 'settings') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+        <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-cyan-900/8 via-transparent to-transparent pointer-events-none" />
+        <div className="relative z-10 h-screen">
+          <SettingsPage
+            profile={profile}
+            onSave={async (data) => {
+              await saveProfile(data);
+            }}
+            onBack={() => setPage('chat')}
+          />
+        </div>
+      </div>
     );
   }
 
@@ -64,45 +86,35 @@ function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-lg border border-slate-700/50">
-              <Activity className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-xs text-slate-400">
-                <span className="text-emerald-400 font-medium">Live</span> · Powered by Milo AI
-              </span>
+          {profile && (
+            <div className="flex items-center gap-3">
+              {profile.avatar_url && (
+                <img src={profile.avatar_url} alt="" className="w-8 h-8 rounded-lg object-cover border border-slate-700" />
+              )}
+              <div className="hidden sm:block text-right">
+                <p className="text-sm text-white font-medium">{profile.name}</p>
+                <p className="text-xs text-slate-400">{profile.role} · {profile.campus_location || 'No location'}</p>
+              </div>
             </div>
-            <div className="hidden sm:flex items-center gap-1.5">
-              <Shield className="w-3.5 h-3.5 text-slate-500" />
-              <span className="text-xs text-slate-500">Escrow Protected</span>
-            </div>
-          </div>
+          )}
         </div>
       </header>
 
       {/* Body */}
-      <div className="relative z-10 flex flex-1 overflow-hidden">
-        {/* Sidebar — hidden on mobile */}
-        <div className="hidden lg:block">
-          <Sidebar
-            profile={profile}
-            activeGigs={activeGigs}
-            matches={matches}
-            totalEscrow={totalEscrow}
-          />
-        </div>
-
-        {/* Chat area */}
-        <main className="flex-1 flex flex-col min-w-0 overflow-hidden" style={{ height: 'calc(100vh - 57px)' }}>
-          <MiloChat
-            profile={profile}
-            userId={userId}
-            onSaveGig={saveGig}
-            onSaveMatches={saveMatches}
-            onUpdateMatchDecision={updateMatchDecision}
-            onReleaseEscrow={releaseEscrow}
-            onPersistMessage={addMessage}
-          />
-        </main>
+      <div className="relative z-10 flex-1 overflow-hidden" style={{ height: 'calc(100vh - 57px)' }}>
+        <ChatPage
+          profile={profile}
+          userId={userId}
+          activeGigs={activeGigs}
+          matches={matches}
+          totalEscrow={totalEscrow}
+          onOpenSettings={() => setPage('settings')}
+          onSaveGig={saveGig}
+          onSaveMatches={saveMatches}
+          onUpdateMatchDecision={updateMatchDecision}
+          onReleaseEscrow={releaseEscrow}
+          onPersistMessage={addMessage}
+        />
       </div>
     </div>
   );

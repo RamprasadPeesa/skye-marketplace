@@ -38,7 +38,7 @@ export function useAppState() {
     load();
   }, [userId]);
 
-  const saveProfile = useCallback(async (data: Omit<UserProfile, 'id' | 'user_id' | 'created_at' | 'updated_at'>) => {
+  const saveProfile = useCallback(async (data: Partial<Omit<UserProfile, 'id' | 'user_id' | 'created_at' | 'updated_at'>>) => {
     const payload = { ...data, user_id: userId };
     const { data: saved, error } = await supabase
       .from('user_profiles')

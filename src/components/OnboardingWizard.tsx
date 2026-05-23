@@ -58,6 +58,12 @@ export function OnboardingWizard({ onComplete }: Props) {
       pay_max: payMax,
       skills_interests: skills,
       onboarding_complete: true,
+      avatar_url: null,
+      bio: '',
+      latitude: null,
+      longitude: null,
+      skills: [],
+      availability: 'flexible',
     });
   };
 

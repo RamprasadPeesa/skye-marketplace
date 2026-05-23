@@ -16,6 +16,12 @@ export type UserProfile = {
   pay_max: number;
   skills_interests: string[];
   onboarding_complete: boolean;
+  avatar_url: string | null;
+  bio: string;
+  latitude: number | null;
+  longitude: number | null;
+  skills: string[];
+  availability: 'flexible' | 'mornings' | 'afternoons' | 'evenings' | 'weekends_only';
   created_at: string;
   updated_at: string;
 };
